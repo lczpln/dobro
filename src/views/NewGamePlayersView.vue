@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import Button from '@/components/ui/button/Button.vue'
-import Input from '@/components/ui/input/Input.vue'
-import { useCoreStore } from '@/stores/core'
-import { Plus, Skull } from 'lucide-vue-next'
-import PlayerList from '@/components/PlayerList.vue'
-import PageTitle from '@/components/PageTitle.vue'
-import ButtonGoBack from '@/components/ButtonGoBack.vue'
-import ContentWrapper from '@/components/ContentWrapper.vue'
-import PageWrapper from '@/components/PageWrapper.vue'
-import { config } from '@/constants/game'
+import { computed, ref } from "vue";
+import Button from "@/components/ui/button/Button.vue";
+import Input from "@/components/ui/input/Input.vue";
+import { useCoreStore } from "@/stores/core";
+import { ArrowRight, Plus, Skull } from "lucide-vue-next";
+import PlayerList from "@/components/PlayerList.vue";
+import PageTitle from "@/components/PageTitle.vue";
+import ButtonGoBack from "@/components/ButtonGoBack.vue";
+import ContentWrapper from "@/components/ContentWrapper.vue";
+import PageWrapper from "@/components/PageWrapper.vue";
+import { PlayerFactory } from "@/utils/playerFactory";
 
-const coreStore = useCoreStore()
+const coreStore = useCoreStore();
 
-const playerInput = ref('')
+const playerInput = ref("");
 
 const addNewPlayer = () => {
-  const name = playerInput.value
+  coreStore.game.addPlayer(new PlayerFactory(playerInput.value));
+  playerInput.value = "";
+};
 
-  coreStore.addPlayer(name)
-  playerInput.value = ''
-}
-
-const canGoNext = computed(() => coreStore.game.players.length >= config.minPlayers)
+const canGoNext = computed(
+  () => coreStore.game.players.length >= coreStore.game.minPlayers
+);
 </script>
 
 <template>
@@ -45,7 +45,7 @@ const canGoNext = computed(() => coreStore.game.players.length >= config.minPlay
       <PlayerList :list="coreStore.game.players">
         <template #default="{ player }">
           <Button
-            @click="coreStore.removePlayer(player.name)"
+            @click="coreStore.game.removePlayer(player.name)"
             variant="outline"
             class="text-sm text-primary"
           >
@@ -55,15 +55,15 @@ const canGoNext = computed(() => coreStore.game.players.length >= config.minPlay
       </PlayerList>
 
       <Button
-        @click="coreStore.setStep('new-game-rounds')"
+        @click="coreStore.game.setStep('new-game-rounds')"
         class="w-64 h-14 text-xl font-bold mb-4"
         :class="{ 'box-shadow-ping-inverse-color': canGoNext }"
         :disabled="!canGoNext"
       >
-        Continuar
+        Próximo <ArrowRight class="ml-2"/>
       </Button>
 
-      <ButtonGoBack @click="coreStore.setStep('welcome')" />
+      <ButtonGoBack @click="coreStore.game.setStep('welcome')" />
     </ContentWrapper>
   </PageWrapper>
 </template>

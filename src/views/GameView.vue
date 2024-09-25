@@ -2,7 +2,8 @@
   <PageWrapper>
     <ContentWrapper>
       <PageTitle>
-        Rodada {{ coreStore.normalizedCurrentRound }} de {{ coreStore.game.rounds }}
+        Rodada {{ coreStore.game.normalizedCurrentRound }} de
+        {{ coreStore.game.rounds }}
       </PageTitle>
 
       <PlayerList :list="coreStore.game.players">
@@ -27,37 +28,37 @@
       </PlayerList>
 
       <Button
-        @click="coreStore.nextRound()"
+        @click="coreStore.game.nextRound()"
         class="w-64 h-14 text-xl font-bold mb-4"
         :class="{
-          'box-shadow-ping-inverse-color': coreStore.hasAllPlayerScored
+          'box-shadow-ping-inverse-color': coreStore.game.hasAllPlayerScored,
         }"
-        :disabled="!coreStore.hasAllPlayerScored"
+        :disabled="!coreStore.game.hasAllPlayerScored"
       >
-        {{ coreStore.isLastRound ? 'Finalizar jogo' : 'Próxima rodada' }}
+        {{ coreStore.game.isLastRound ? "Finalizar jogo" : "Próxima rodada" }}
       </Button>
 
-      <ButtonGoBack @click="coreStore.previousRound()" />
+      <ButtonGoBack @click="coreStore.game.previousRound()" />
     </ContentWrapper>
   </PageWrapper>
 </template>
 
 <script setup lang="ts">
-import ButtonGoBack from '@/components/ButtonGoBack.vue'
-import ContentWrapper from '@/components/ContentWrapper.vue'
-import ExclamationCard from '@/components/ExclamationCard.vue'
-import PageTitle from '@/components/PageTitle.vue'
-import PageWrapper from '@/components/PageWrapper.vue'
-import PlayerList from '@/components/PlayerList.vue'
-import Button from '@/components/ui/button/Button.vue'
+import ButtonGoBack from "@/components/ButtonGoBack.vue";
+import ContentWrapper from "@/components/ContentWrapper.vue";
+import ExclamationCard from "@/components/ExclamationCard.vue";
+import PageTitle from "@/components/PageTitle.vue";
+import PageWrapper from "@/components/PageWrapper.vue";
+import PlayerList from "@/components/PlayerList.vue";
+import Button from "@/components/ui/button/Button.vue";
 import {
   NumberField,
   NumberFieldContent,
   NumberFieldDecrement,
   NumberFieldIncrement,
-  NumberFieldInput
-} from '@/components/ui/number-field'
-import { useCoreStore } from '@/stores/core'
+  NumberFieldInput,
+} from "@/components/ui/number-field";
+import { useCoreStore } from "@/stores/core";
 
-const coreStore = useCoreStore()
+const coreStore = useCoreStore();
 </script>

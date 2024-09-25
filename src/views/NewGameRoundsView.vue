@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import ButtonGoBack from '@/components/ButtonGoBack.vue'
-import ContentWrapper from '@/components/ContentWrapper.vue'
-import PageTitle from '@/components/PageTitle.vue'
-import PageWrapper from '@/components/PageWrapper.vue'
-import Button from '@/components/ui/button/Button.vue'
-import Slider from '@/components/ui/slider/Slider.vue'
-import { config } from '@/constants/game'
-import { useCoreStore } from '@/stores/core'
+import ButtonGoBack from "@/components/ButtonGoBack.vue";
+import ContentWrapper from "@/components/ContentWrapper.vue";
+import PageTitle from "@/components/PageTitle.vue";
+import PageWrapper from "@/components/PageWrapper.vue";
+import Button from "@/components/ui/button/Button.vue";
+import Slider from "@/components/ui/slider/Slider.vue";
+import { config } from "@/constants/game";
+import { useCoreStore } from "@/stores/core";
+import { Redo, RefreshCcw } from "lucide-vue-next";
 
-const coreStore = useCoreStore()
+const coreStore = useCoreStore();
 </script>
 
 <template>
@@ -21,7 +22,7 @@ const coreStore = useCoreStore()
       <div class="w-64 mb-8">
         <Slider
           :model-value="[coreStore.game.rounds]"
-          @update:model-value="coreStore.setGameMaxRounds($event?.[0] || 0)"
+          @update:model-value="coreStore.game.setGameMaxRounds($event?.[0])"
           :min="config.minRounds"
           :max="config.maxRounds"
           :step="1"
@@ -32,15 +33,27 @@ const coreStore = useCoreStore()
       <div class="text-xl mb-8">Número de Rounds</div>
 
       <Button
-        @click="coreStore.setStep('game')"
+        @click="coreStore.game.setStep('game')"
         class="w-64 h-14 text-xl font-bold mb-4"
-        :class="{ 'box-shadow-ping-inverse-color': coreStore.game.players.length }"
+        :class="{
+          'box-shadow-ping-inverse-color': coreStore.game.players.length,
+        }"
         :disabled="!coreStore.game.players.length"
       >
         Iniciar Jogo
       </Button>
 
-      <ButtonGoBack @click="coreStore.setStep('new-game-players')" />
+      <Button
+        v-if="coreStore.game.hasGameScored"
+        @click="coreStore.newGame('game')"
+        variant="secondary"
+        class="flex items-center justify-center w-64 h-10 text-sm font-medium text-primary-foreground mb-4"
+        :disabled="!coreStore.game.players.length"
+      >
+        <RefreshCcw class="mr-2 h-4 w-4" /> Reiniciar
+      </Button>
+
+      <ButtonGoBack @click="coreStore.game.setStep('new-game-players')" />
     </ContentWrapper>
   </PageWrapper>
 </template>
