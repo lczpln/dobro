@@ -4,7 +4,7 @@
   >
     <Button
       class="fixed bottom-[15%] md:bottom-[50%] md:translate-y-1/2 h-20 w-20 box-shadow-ping"
-      @click="coreStore.setStep('new-game-players')"
+      @click="coreStore.game.setStep('new-game-players')"
     >
       <ArrowRightCircle :size="200" />
     </Button>
