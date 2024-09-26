@@ -1,5 +1,11 @@
 import { config as defaultConfig } from "@/constants/game";
-import { type Game, type GameConfig, type Player } from "@/types/game";
+import {
+  type Game,
+  type GameConfig,
+  type Player,
+  type RedCard,
+  type Score,
+} from "@/types/game";
 import type { Steps } from "@/types/steps";
 
 export class GameFactory implements Game {
@@ -58,20 +64,17 @@ export class GameFactory implements Game {
     return this.players.find((player) => player.name === playerName);
   }
 
-  createPlayersRoundData(): void {
+  normalizePlayersData(): void {
     this.players.forEach((player) => {
-      if (!player.getScore(this.currentRound)) {
-        player.addScore(this.currentRound, 0);
-      }
-
-      if (!player.getRedCard(this.currentRound)) {
-        player.setRedCard(this.currentRound, 0);
-      }
+      player.normalizeScores(this.currentRound);
+      player.normalizeRedCards(this.currentRound);
     });
   }
 
   get hasGameChanged(): boolean {
-    return this.players.some((player) => player.totalScore || player.totalRedCards);
+    return this.players.some(
+      (player) => player.totalScore || player.totalRedCards
+    );
   }
 
   get playersSortedByScore() {
@@ -116,7 +119,7 @@ export class GameFactory implements Game {
   nextRound(): void {
     if (this.currentRound < this.rounds - 1) {
       this.currentRound++;
-      this.createPlayersRoundData();
+      this.normalizePlayersData();
     } else {
       this.step = "game-over";
     }
@@ -132,5 +135,8 @@ export class GameFactory implements Game {
 
   setStep(step: Steps): void {
     this.step = step;
+    if (step === "game") {
+      this.normalizePlayersData();
+    }
   }
 }

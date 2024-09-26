@@ -36,6 +36,8 @@ export type Player = {
   addScore: (round: number, score: number) => void;
   toggleRedCard: (round: number) => void;
   revokeRedCard: (round: number) => void;
+  normalizeRedCards: (round: number) => void;
+  normalizeScores: (round: number) => void;
 };
 
 export type GameConfig = typeof config;

@@ -13,15 +13,15 @@
           <NumberField
             v-model="player.score[coreStore.game.currentRound]"
             :id="`${player.name}-score`"
-            class="text-black w-24"
+            class="text-primary-foreground w-24"
             :default-value="0"
             :step="1"
             :min="0"
           >
             <NumberFieldContent>
-              <NumberFieldDecrement />
-              <NumberFieldInput />
-              <NumberFieldIncrement />
+              <NumberFieldDecrement class="bg-primary rounded-l-sm" />
+              <NumberFieldInput class="bg-primary border-none font-bold" />
+              <NumberFieldIncrement class="bg-primary rounded-r-sm" />
             </NumberFieldContent>
           </NumberField>
         </template>

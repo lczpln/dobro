@@ -1,19 +1,19 @@
 <template>
   <Button
     v-if="!disableFunction"
-    class="flex items-center justify-center rounded-sm min-w-8 w-8 h-10 border-muted border transition-all p-0"
+    class="flex items-center justify-center rounded-sm min-w-8 w-8 h-10 border-primary-foreground border transition-all p-0"
     :class="{
       'bg-secondary text-white hover:bg-secondary':
         coreStore.game.playerHasRedCard(playerName),
     }"
     @click="coreStore.game.togglePlayerRedCard(playerName)"
   >
-    <AlertCircle :size="16" />
+    <AlertCircle :size="16" class="stroke-primary-foreground" />
   </Button>
 
   <span
     v-else
-    class="flex items-center justify-center rounded-sm min-w-8 w-8 h-10 border-muted border transition-all p-0 bg-secondary text-white hover:bg-secondary"
+    class="flex items-center justify-center rounded-sm min-w-8 w-8 h-10 border-primary-foreground border transition-all p-0 bg-secondary text-primary-foreground hover:bg-secondary"
   >
     <AlertCircle :size="16" />
   </span>

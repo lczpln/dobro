@@ -3,7 +3,12 @@ import { computed, ref } from "vue";
 import Button from "@/components/ui/button/Button.vue";
 import Input from "@/components/ui/input/Input.vue";
 import { useCoreStore } from "@/stores/core";
-import { ArrowRight, Plus, Skull } from "lucide-vue-next";
+import {
+  AlertCircle,
+  ArrowRight,
+  UserRoundMinus,
+  UserRoundPlus,
+} from "lucide-vue-next";
 import PlayerList from "@/components/PlayerList.vue";
 import PageTitle from "@/components/PageTitle.vue";
 import ButtonGoBack from "@/components/ButtonGoBack.vue";
@@ -30,26 +35,32 @@ const canGoNext = computed(
     <ContentWrapper>
       <PageTitle>Configurar Jogadores</PageTitle>
 
-      <form
-        @submit.prevent="addNewPlayer"
-        class="flex items-center justify-center mb-8 w-full h-14"
-      >
-        <Input
-          class="rounded-r-none text-black h-full text-lg"
-          v-model="playerInput"
-          placeholder="Fulano de tal"
-        />
-        <Button class="rounded-l-none h-full" type="submit"><Plus /></Button>
+      <form @submit.prevent="addNewPlayer" class="flex flex-col mb-8 w-full">
+        <div class="flex items-center h-14 w-full mb-2">
+          <Input
+            class="rounded-r-none text-black text-lg h-full"
+            v-model="playerInput"
+            placeholder="Fulano de tal"
+          />
+          <Button class="rounded-l-none h-full" type="submit"
+            ><UserRoundPlus
+          /></Button>
+        </div>
+
+        <small class="flex items-center gap-1 text-zinc-500 text-left text-xs"
+          ><AlertCircle :size="12" /> Dobro requer pelo menos
+          {{ coreStore.game.minPlayers }} jogadores.</small
+        >
       </form>
 
       <PlayerList :list="coreStore.game.players">
         <template #default="{ player }">
           <Button
             @click="coreStore.game.removePlayer(player.name)"
-            variant="outline"
-            class="text-sm text-primary"
+            variant="secondary"
+            class="text-sm text-primary-foreground"
           >
-            <Skull :size="15" />
+            <UserRoundMinus :size="15" />
           </Button>
         </template>
       </PlayerList>
@@ -60,7 +71,7 @@ const canGoNext = computed(
         :class="{ 'box-shadow-ping-inverse-color': canGoNext }"
         :disabled="!canGoNext"
       >
-        Próximo <ArrowRight class="ml-2"/>
+        Próximo <ArrowRight class="ml-2" />
       </Button>
 
       <ButtonGoBack @click="coreStore.game.setStep('welcome')" />
