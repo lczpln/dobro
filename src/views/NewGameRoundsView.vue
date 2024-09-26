@@ -7,7 +7,7 @@ import Button from "@/components/ui/button/Button.vue";
 import Slider from "@/components/ui/slider/Slider.vue";
 import { config } from "@/constants/game";
 import { useCoreStore } from "@/stores/core";
-import { Redo, RefreshCcw } from "lucide-vue-next";
+import { Play, RefreshCcw, StepForward } from "lucide-vue-next";
 
 const coreStore = useCoreStore();
 </script>
@@ -40,11 +40,13 @@ const coreStore = useCoreStore();
         }"
         :disabled="!coreStore.game.players.length"
       >
-        Iniciar Jogo
+        {{ coreStore.game.hasGameChanged ? "Continuar jogo" : "Iniciar Jogo" }}
+        <StepForward v-if="coreStore.game.hasGameChanged" class="ml-2" />
+        <Play v-else class="ml-2" />
       </Button>
 
       <Button
-        v-if="coreStore.game.hasGameScored"
+        v-if="coreStore.game.hasGameChanged"
         @click="coreStore.newGame('game')"
         variant="secondary"
         class="flex items-center justify-center w-64 h-10 text-sm font-medium text-primary-foreground mb-4"

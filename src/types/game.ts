@@ -6,7 +6,7 @@ export type Game = {
   step: Steps;
   rounds: number;
   currentRound: number;
-  hasGameScored: boolean;
+  hasGameChanged: boolean;
   hasAllPlayerScored: boolean;
   addPlayer: (player: Player) => void;
   setPlayers: (players: Player[]) => void;
