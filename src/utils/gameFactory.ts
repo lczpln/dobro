@@ -70,8 +70,8 @@ export class GameFactory implements Game {
     });
   }
 
-  get hasGameScored(): boolean {
-    return this.players.some((player) => player.totalScore);
+  get hasGameChanged(): boolean {
+    return this.players.some((player) => player.totalScore || player.totalRedCards);
   }
 
   get playersSortedByScore() {
