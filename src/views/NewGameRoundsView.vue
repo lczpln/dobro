@@ -7,7 +7,7 @@ import Button from "@/components/ui/button/Button.vue";
 import Slider from "@/components/ui/slider/Slider.vue";
 import { config } from "@/constants/game";
 import { useCoreStore } from "@/stores/core";
-import { Redo, RefreshCcw } from "lucide-vue-next";
+import { RefreshCcw } from "lucide-vue-next";
 
 const coreStore = useCoreStore();
 </script>
