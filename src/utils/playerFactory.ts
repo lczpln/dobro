@@ -37,6 +37,30 @@ export class PlayerFactory implements Player {
     this.score[round] = score;
   }
 
+  normalizeScores(round: number): void {
+    if (!this.score[round]) {
+      this.addScore(round, 0);
+    } else {
+      Object.values(this.score).forEach((_, index) => {
+        if (index > round) {
+          delete this.score[index];
+        }
+      });
+    }
+  }
+
+  normalizeRedCards(round: number): void {
+    if (!this.redCards[round]) {
+      this.setRedCard(round, 0);
+    } else {
+      Object.values(this.redCards).forEach((_, index) => {
+        if (index > round) {
+          delete this.redCards[index];
+        }
+      });
+    }
+  }
+
   get totalScore() {
     return Object.values(this.score).reduce(
       (acc: number, cur: number) => acc + cur,

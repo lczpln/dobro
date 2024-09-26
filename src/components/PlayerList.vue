@@ -18,7 +18,7 @@
       </li>
     </ul>
 
-    <h2 v-else class="text-center text-2xl font-bold">Nenhum jogador adicionado</h2>
+    <h2 v-else class="text-center text-xl font-bold">Nenhum jogador adicionado</h2>
   </div>
 </template>
 
