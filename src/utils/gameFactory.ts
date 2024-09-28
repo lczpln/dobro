@@ -27,8 +27,10 @@ export class GameFactory implements Game {
     this.minPlayers = config.minPlayers;
   }
 
-  addPlayer(player: Player): void {
+  addPlayer(player: Player): boolean {
+    if (!player.name) return false;
     this.players.push(player);
+    return true;
   }
 
   setPlayers(players: Player[]): void {

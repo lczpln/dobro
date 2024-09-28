@@ -21,7 +21,8 @@ const coreStore = useCoreStore();
 const playerInput = ref("");
 
 const addNewPlayer = () => {
-  coreStore.game.addPlayer(new PlayerFactory(playerInput.value));
+  const ok = coreStore.game.addPlayer(new PlayerFactory(playerInput.value));
+  if (!ok) return;
   playerInput.value = "";
 };
 
