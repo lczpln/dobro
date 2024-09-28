@@ -1,11 +1,5 @@
 import { config as defaultConfig } from "@/constants/game";
-import {
-  type Game,
-  type GameConfig,
-  type Player,
-  type RedCard,
-  type Score,
-} from "@/types/game";
+import { type Game, type GameConfig, type Player } from "@/types/game";
 import type { Steps } from "@/types/steps";
 
 export class GameFactory implements Game {
@@ -28,7 +22,7 @@ export class GameFactory implements Game {
   }
 
   addPlayer(player: Player): boolean {
-    if (!player.name) return false;
+    if (!player.name || !this.playerExists(player.name)) return false;
     this.players.push(player);
     return true;
   }
