@@ -8,7 +8,7 @@ export type Game = {
   currentRound: number;
   hasGameChanged: boolean;
   hasAllPlayerScored: boolean;
-  addPlayer: (player: Player) => void;
+  addPlayer: (player: Player) => boolean;
   setPlayers: (players: Player[]) => void;
   removePlayer: (playerName: string) => void;
   togglePlayerRedCard: (playerName: string, round?: number) => void;
