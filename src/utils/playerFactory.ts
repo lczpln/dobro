@@ -7,10 +7,10 @@ export class PlayerFactory implements Player {
   avatar: string;
 
   constructor(name: string) {
-    this.name = name;
+    this.name = name.trim();
     this.score = {};
     this.redCards = {};
-    this.avatar = `https://api.dicebear.com/9.x/adventurer/svg?seed=${name}`;
+    this.avatar = `https://api.dicebear.com/9.x/adventurer/svg?seed=${this.name}`;
   }
 
   getScore(round: number): number {
